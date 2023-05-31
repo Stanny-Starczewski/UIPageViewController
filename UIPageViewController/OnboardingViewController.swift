@@ -55,11 +55,11 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         
         let previousIndex = viewControllerIndex - 1
         
-        guard previousIndex >= 0 else {
-            return nil
+        if previousIndex >= 0 {
+            return pages[previousIndex]
+        } else {
+            return pages.last
         }
-        
-        return pages[previousIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -70,11 +70,11 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         
         let nextIndex = viewControllerIndex + 1
         
-        guard nextIndex < pages.count else {
-            return nil
+        if nextIndex < pages.count {
+            return pages[nextIndex]
+        } else {
+            return pages.first
         }
-        
-        return pages[nextIndex]
     }
     
     // MARK: - UIPageViewControllerDelegate
