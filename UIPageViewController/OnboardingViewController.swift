@@ -1,6 +1,6 @@
 import UIKit
 
-class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSource {
+class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
     lazy var pages: [UIViewController] = {
         let red = UIViewController()
@@ -32,6 +32,7 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         
         //устанавливаем OnboardingViewController собственным DataSource
         dataSource = self
+        delegate = self
         
         if let first = pages.first {
             setViewControllers([first], direction: .forward, animated: true, completion: nil)
@@ -76,6 +77,14 @@ class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSo
         return pages[nextIndex]
     }
     
+    // MARK: - UIPageViewControllerDelegate
 
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if let currentViewController = pageViewController.viewControllers?.first,
+           let currentIndex = pages.firstIndex(of: currentViewController) {
+            pageControl.currentPage = currentIndex
+        }
+    }
+    
 }
 
